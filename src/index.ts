@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 import { todoRouter } from "../src/routes/todoRoutes";
@@ -6,6 +7,16 @@ import { globalErrorHandler } from "./lib/utils/globalErrorHandler";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(
+    cors({
+        origin: [
+            process.env.LOCAL_CLIENT as string,
+            process.env.MAIN_CLIENT as string,
+        ],
+    })
+);
+app.use(express.json());
 
 // Root route of the server
 app.get("/", (req, res) => {
