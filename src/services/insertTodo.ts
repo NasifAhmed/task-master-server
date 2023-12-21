@@ -11,12 +11,18 @@ export async function insertTodo(data: TodoType) {
     };
 
     try {
-        const res = await Todo.updateOne(todo, {
-            upsert: true,
-        });
-        console.log("Todo inserted successfully");
-        console.log(res);
-        return res;
+        if (data?._id) {
+            const res = await Todo.updateOne({ _id: data._id }, todo);
+            console.log("Todo updated");
+            console.log(res);
+            return res;
+        } else {
+            const todoData = new Todo(todo);
+            const res = await todoData.save();
+            console.log("Todo inserted");
+            console.log(res);
+            return res;
+        }
     } catch (error) {
         console.log("Error inserting TODO : ", error);
     }
