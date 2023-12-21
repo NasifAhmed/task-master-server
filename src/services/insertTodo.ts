@@ -1,6 +1,7 @@
 import { Todo } from "../models/Todo";
+import { TodoType } from "../types/todo";
 
-export async function insertTodo() {
+export async function insertTodo(data: TodoType) {
     const todo = {
         owner: "test@test.com",
         title: "Todo Title",
