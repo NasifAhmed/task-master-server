@@ -1,12 +1,37 @@
 import express from "express";
+import morgan from "morgan";
+import { todoRouter } from "../src/routes/todoRoutes";
+import { connectDB } from "./lib/utils/connectDB";
+import { globalErrorHandler } from "./lib/utils/globalErrorHandler";
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
+// Root route of the server
 app.get("/", (req, res) => {
     res.send("Server is running....");
 });
 
-app.listen(PORT, () => {
-    console.log("Server is running on port :", PORT);
+// Routes
+app.use(todoRouter);
+
+// Error handling
+app.all("*", morgan(`tiny`), (req, res, next) => {
+    const error: any = new Error(`Can't find ${req.originalUrl} on the server`);
+    error.status = 404;
+    next(error);
 });
+app.use(globalErrorHandler);
+
+const runServer = async function () {
+    try {
+        await connectDB();
+    } catch (error) {
+        console.log(`DB connection ERROR : ${error}`);
+    }
+    app.listen(PORT, () => {
+        console.log("Server is running on port :", PORT);
+    });
+};
+
+runServer();
