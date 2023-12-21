@@ -1,18 +1,18 @@
 import { Todo } from "../models/Todo";
 import { TodoType } from "../types/todo";
 
-export async function insertTodo(data: TodoType) {
-    const todo = {
-        owner: "test@test.com",
-        title: "Todo Title",
-        desc: "Todo Desc",
-        status: "Todo",
-        deadline: "2023-12-21T06:19:21+00:00",
-    };
+export async function insertTodo(todo: TodoType) {
+    // const todo = {
+    //     owner: "test@test.com",
+    //     title: "Todo Title",
+    //     desc: "Todo Desc",
+    //     status: "Todo",
+    //     deadline: "2023-12-21T06:19:21+00:00",
+    // };
 
     try {
-        if (data?._id) {
-            const res = await Todo.updateOne({ _id: data._id }, todo);
+        if (todo?._id) {
+            const res = await Todo.updateOne({ _id: todo._id }, todo);
             console.log("Todo updated");
             console.log(res);
             return res;
