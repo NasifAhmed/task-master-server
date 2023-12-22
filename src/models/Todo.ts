@@ -7,6 +7,7 @@ const todoSchema = new Schema({
     desc: String,
     status: String,
     deadline: Date,
+    priority: String,
 });
 
 export const Todo = mongoose.model("Todo", todoSchema);

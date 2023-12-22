@@ -46,3 +46,5 @@ const runServer = async function () {
 };
 
 runServer();
+
+export default app;

@@ -11,7 +11,7 @@ export async function queryTodo(filter: any) {
         delete filter.sort;
     }
     try {
-        const cursor = await Todo.find().sort(sortField).exec();
+        const cursor = await Todo.find(filter).sort(sortField).exec();
         return cursor;
     } catch (error) {
         console.log("Error querying Todo: ", error);
